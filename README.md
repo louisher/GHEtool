@@ -17,6 +17,21 @@ This graphical interface is made by Tobias Blanke from FH Aachen.
   Screenshot of the GUI.
 </p>
 
+PyInstaller can create the executable. The following command can do this, but it has to be executed in the folder where the GHEtool is installed:
+1. with the console:
+```
+PyInstaller --noconfirm --onefile --console --splash "./src/GHEtool/gui/Icon.ico" --name "GHEtool" --icon "./src/GHEtool/gui/Icon.ico" "./src/GHEtool/gui/GUI.py"
+```
+2. without a console:
+```
+PyInstaller --noconfirm --onefile --windowed --splash "./src/GHEtool/gui/Icon.ico" --name "GHEtool" --icon "./src/GHEtool/gui/Icon.ico" "./src/GHEtool/gui/GUI.py"
+```
+The Data folder has to be copied to the folder where the executable is located otherwise the executable does not run.
+Note: It is possible that Pillow needs to be installed. The following command can do this:
+```
+pip install Pillow
+```
+
 ## Requirements
 This code is tested with Python 3.8 and requires the following libraries (the versions mentioned are the ones with which the code is tested)
 

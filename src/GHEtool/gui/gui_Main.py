@@ -7,6 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from GHEtool.gui import icons_rc
+
 
 class Ui_GHEtool(object):
     def setupUi(self, GHEtool):
@@ -3319,5 +3321,3 @@ class Ui_GHEtool(object):
         self.actionUpdateBoreholeGraph.setText(_translate("GHEtool", "UpdateBoreholeGraph"))
         self.actionGalician.setText(_translate("GHEtool", "Galician"))
         self.actionGalician.setShortcut(_translate("GHEtool", "Ctrl+Alt+A"))
-
-from .icons_rc import *

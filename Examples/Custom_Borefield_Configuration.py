@@ -13,7 +13,8 @@ Please note that, depending on the complexity of the custom field, this can rang
  """
 
 # import all the relevant functions
-from GHEtool import *
+from GHEtool import Borefield
+from GHEtool import GroundData
 import pygfunction as gt
 
 if __name__ == "__main__":
