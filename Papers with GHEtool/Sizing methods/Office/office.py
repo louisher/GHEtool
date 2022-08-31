@@ -1,6 +1,6 @@
 """
 This document contains the sizing of a borefield, according to the three sizing methods in GHEtool
-for a swimming pool. This swimming pool has an enormous imbalance towards heat extraction.
+for an office. The office is almost perfectly balanced, limited by the maximum temperature.
 """
 # import all the relevant functions
 from GHEtool import *
@@ -8,7 +8,7 @@ import time
 
 if __name__ == "__main__":
     # initiate ground, fluid and pipe data
-    ground_data = GroundData(110, 6, 3, 10, 0.12, 15, 20, 2.4 * 10 ** 6)
+    ground_data = GroundData(110, 6, 3, 10, 0.12, 10, 10, 2.4 * 10 ** 6)
     fluid_data = FluidData(0.2, 0.568, 998, 4180, 1e-3)
     pipe_data = PipeData(1, 0.015, 0.02, 0.4, 0.05, 0.075, 2)
 
@@ -24,10 +24,11 @@ if __name__ == "__main__":
     borefield.sizing_setup(use_constant_Tg=False, use_constant_Rb=False)
 
     # set temperature bounds
+    borefield.set_max_ground_temperature(17)
     borefield.set_min_ground_temperature(3)
 
     # load the hourly profile
-    borefield.load_hourly_profile("swimming_pool.csv", header=True, separator=";", first_column_heating=False)
+    borefield.load_hourly_profile("office.csv", header=True, separator=";", first_column_heating=False)
 
     ### size the borefield
     # according to L2
