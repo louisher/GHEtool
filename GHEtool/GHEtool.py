@@ -2062,7 +2062,6 @@ class Borefield:
         cooling = self.hourly_cooling_load.copy()
         cooling.sort()
         cooling = cooling * (-1)
-        print(np.average(cooling[-10:]), cooling[-10])
 
         plt.figure()
         plt.step(np.arange(0, 8760, 1), heating, 'r-', label="Heating")

@@ -1,0 +1,19 @@
+#### Data for Modelica
+
+### Swimming pool
+## Datafile
+swimming_pool_one_column.csv
+
+## Ground data
+Ground thermal conductivity [W/mK] = 3
+Ground surface temperature [deg C] = 10
+Volumetric heat capacity of the ground [J/m3K] = 2.4*10**6
+Geothermal heat flux [W/m2] = 0.06
+
+## Fluid data
+
+## Borehole data
+
+## Borefield data
+width [#] = 15
+length [#] = 20
