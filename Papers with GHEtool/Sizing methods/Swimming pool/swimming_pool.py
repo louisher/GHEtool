@@ -1,5 +1,6 @@
 """
-This document is an example of the different sizing methods in GHEtool.
+This document contains the sizing of a borefield, according to the three sizing methods in GHEtool
+for a swimming pool.
 """
 # import all the relevant functions
 from GHEtool import *
@@ -21,6 +22,9 @@ if __name__ == "__main__":
 
     # use variable ground temperature
     borefield.sizing_setup(use_constant_Tg=False, use_constant_Rb=False)
+
+    # set temperature bounds
+    borefield.set_min_ground_temperature(3)
 
     # load the hourly profile
     borefield.load_hourly_profile("swimming_pool.csv", header=True, separator=";", first_column_heating=False)

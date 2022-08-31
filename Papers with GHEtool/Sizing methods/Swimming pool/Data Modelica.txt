@@ -32,6 +32,6 @@ Pipe roughness [m] = 1e-6
 width [#] = 15
 length [#] = 20
 spacing [m] = 6
-depth [m] = L2: 243.397
-			L3: 238.674
-			L4: 237.342
+depth [m] = 	L2: 318.144
+		L3: 312.215
+		L4: 310.678

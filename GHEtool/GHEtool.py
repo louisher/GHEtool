@@ -41,6 +41,7 @@ class Borefield:
     DEFAULT_DEPTH_ARRAY: list = [1] + list(range(25, 351, 25))  # m
     DEFAULT_TIME_ARRAY: list = timeValues()  # sec
     DEFAULT_CONVERGENCE_MINIMAL_DEPTH: int = 15
+    DEFAULT_CONVERGENCE_MAXIMAL_DEPTH: int = 15
 
     temp: int = 0
     HOURLY_LOAD_ARRAY: list = []
@@ -1211,7 +1212,6 @@ class Borefield:
         :param H: depth at which the gfunctions should be evaluated
         :return: np.array of gfunction values
         """
-
         # check for value of H < 1
         if H < 1:
             self.convergence += 1
@@ -1224,7 +1224,7 @@ class Borefield:
         else:
             self.convergence = 0
 
-        # set depth to minimum 1m
+        # set depth to minimum 5m
         H = max(H, 5)
 
         # if calculate is False, than the gfunctions are calculated on the spot
