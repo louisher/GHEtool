@@ -53,5 +53,10 @@ if __name__ == "__main__":
     print("The sizing according to L3 took", round((L3_stop - L3_start) * 1000, 4), "ms and was", depth_L3, "m.")
     print("The sizing according to L4 took", round((L4_stop - L4_start) * 1000, 4), "ms and was", depth_L4, "m.")
 
+    ### export results
+    borefield.export_temperature_profile("L2_temperature_profile.csv", depth=depth_L2, subfolder="exports")
+    borefield.export_temperature_profile("L3_temperature_profile.csv", depth=depth_L3, subfolder="exports")
+    borefield.export_temperature_profile("L4_temperature_profile.csv", depth=depth_L4, subfolder="exports")
+
     borefield.plot_load_duration()
     borefield.print_temperature_profile(plot_hourly=True)
