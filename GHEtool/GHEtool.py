@@ -1026,6 +1026,37 @@ class Borefield:
         """
         self._print_temperature_profile(figure=False, H=depth, plot_hourly=hourly)
 
+    def export_temperature_profile(self, name: str = "export.csv", depth: float = None, delimiter: str = ";",
+                                   subfolder: str = None) -> None:
+        """
+        This function export the calculated temperature profiles.
+        This function only works when there is hourly data available.
+
+        :param name: name of the export document
+        :param depth: depth of the field for which the profile should be calculated (opt)
+        :param delimiter: delimiter to be used in creating the data document
+        :param subfolder: differs from None when the file should be put in a subfolder.
+        subfolder will be created if it does not already exist
+        :return: None
+        """
+
+        # check if hourly data is available
+        if not self._check_hourly_load():
+            raise Exception("There is no hourly data available so no temperature profile can be calculated.")
+
+        # calculate temperature profile
+        self.calculate_temperatures(depth=depth, hourly=True)
+
+        if not subfolder is None:
+            # file should be put in subfolder
+            if not os.path.exists("./" + subfolder):
+                os.makedirs("./" + subfolder)
+
+            np.savetxt("./" + subfolder + "/" + name, self.temperature_result, delimiter=delimiter)
+            return
+
+        np.savetxt(name, self.temperature_result, delimiter=delimiter)
+
     def print_temperature_profile(self, legend: bool = True, plot_hourly: bool = False) -> None:
         """
         This function plots the temperature profile for the calculated depth.
