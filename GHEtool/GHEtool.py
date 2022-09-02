@@ -467,6 +467,19 @@ class Borefield:
         # avg ground temperature is (Tg + gradient + Tg) / 2
         return self.Tg + H * self.flux / self.k_s / 2
 
+    @property
+    def temperature_gradient(self) -> float:
+        """
+        This function returns the temperature gradient of the underground.
+        If use_constant_Tg is True, the gradient is 0
+
+        :return: None
+        """
+        if self.use_constant_Tg:
+            return 0.
+
+        return self.flux/self.k_s
+
     def calculate_Rb(self) -> float:
         """
         This function returns the calculated equivalent borehole thermal resistance Rb* value.
