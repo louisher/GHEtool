@@ -1064,11 +1064,12 @@ class Borefield:
             # file should be put in subfolder
             if not os.path.exists("./" + subfolder):
                 os.makedirs("./" + subfolder)
-
+            np.savetxt("./" + subfolder + "/" + "Tb_" + name, self.Tb, delimiter=delimiter)
             np.savetxt("./" + subfolder + "/" + name, self.temperature_result, delimiter=delimiter)
             return
 
         np.savetxt(name, self.temperature_result, delimiter=delimiter)
+        np.savetxt("Tb_"+name, self.Tb, delimiter=delimiter)
 
     def print_temperature_profile(self, legend: bool = True, plot_hourly: bool = False) -> None:
         """
@@ -1185,8 +1186,6 @@ class Borefield:
             g_value_previous_step = np.concatenate((np.array([0]), g_values))[:-1]
             g_value_differences = g_values - g_value_previous_step
 
-            temp = []
-
             # convolution to get the monthly results
             results = convolve(hourly_load * 1000, g_value_differences)[:len(hourly_load)]
 
@@ -1230,7 +1229,6 @@ class Borefield:
             else:
                 ax1.step(time_array, results_peak_cooling, 'b-', where="pre", lw=1.5, label='Tf peak cooling')
                 ax1.step(time_array, results_peak_heating, 'r-', where="pre", lw=1.5, label='Tf peak heating')
-
 
                 ax1.step(time_array, results_month_cooling, color='b', linestyle="dashed", where="pre", lw=1.5,
                          label='Tf base cooling')

@@ -58,5 +58,7 @@ if __name__ == "__main__":
     borefield.export_temperature_profile("L3_temperature_profile.csv", depth=depth_L3, subfolder="exports")
     borefield.export_temperature_profile("L4_temperature_profile.csv", depth=depth_L4, subfolder="exports")
 
+    print("Gradient", borefield.temperature_gradient)
+
     borefield.plot_load_duration()
     borefield.print_temperature_profile(plot_hourly=True)
