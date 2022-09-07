@@ -1,5 +1,12 @@
 within GHEtoolValidation;
 model Office
+  parameter Integer nSeg = 3;
+  parameter Modelica.Units.SI.Temperature TExt0_start=283.15;
+  parameter Modelica.Units.SI.Length z0=4;
+  parameter Real dT_dz(final unit="K/m", min=0) = 0.02;
+  parameter Modelica.Units.SI.Height z[nSeg]={borFieDat.conDat.hBor/nSeg*(i -
+      0.5) for i in 1:nSeg};
+
   IDEAS.Fluid.Movers.FlowControlled_m_flow pum(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
     T_start=283.15,
@@ -70,13 +77,13 @@ model Office
     annotation (Placement(transformation(extent={{-76,-76},{-56,-56}})));
   IDEAS.Fluid.Geothermal.Borefields.TwoUTubes borFie(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
-    energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
-    nCel=2,
-    nSeg=3,
-    forceGFunCalc=true,
+    energyDynamics=Modelica.Fluid.Types.Dynamics.DynamicFreeInitial,
+    nSeg=nSeg,
+    forceGFunCalc=false,
     borFieDat=borFieDat,
-    TExt_start={283.15,283.15,283.15},
-    dT_dz=0)
+    TExt0_start=TExt0_start,
+    z0=z0,
+    dT_dz=dT_dz)
     annotation (Placement(transformation(extent={{40,-30},{60,-10}})));
   IDEAS.Fluid.Sources.Boundary_pT bou(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
@@ -140,6 +147,6 @@ equation
     experiment(
       StopTime=630720000,
       Interval=3600,
-      __Dymola_fixedstepsize=60,
+      __Dymola_fixedstepsize=20,
       __Dymola_Algorithm="Euler"));
 end Office;

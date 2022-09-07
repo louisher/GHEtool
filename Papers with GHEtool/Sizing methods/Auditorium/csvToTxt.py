@@ -8,7 +8,7 @@ heat_20y=[]
 for i in range(20):
     heat_20y  = heat_20y +heat
 
-time = [3600*i for i in range(8760)]
-full_data = np.stack([time, heat], axis=1)
+time = [3600*i for i in range(8760*20)]
+full_data = np.stack([time, heat_20y], axis=1)
 
 np.savetxt('power.txt', full_data, delimiter="\t",fmt='%f')
