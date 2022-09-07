@@ -1,7 +1,8 @@
 within GHEtoolValidation;
 model Swimming_pool
   parameter Integer nSeg = 5;
-  parameter Modelica.Units.SI.Temperature TExt0_start=273.15 + 13.10678;
+  parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 13.10678;
+  parameter Modelica.Units.SI.Temperature TExt0_start=T_startAll;
   parameter Modelica.Units.SI.Length z0=0;
   parameter Real dT_dz(final unit="K/m", min=0) = 0;
   parameter Modelica.Units.SI.Height z[nSeg]={borFieDat.conDat.hBor/nSeg*(i -
@@ -9,7 +10,7 @@ model Swimming_pool
 
   IDEAS.Fluid.Movers.FlowControlled_m_flow pum(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
-    T_start=283.15,
+    T_start=T_startAll,
     addPowerToMedium=false,
     use_inputFilter=false,
     energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
@@ -35,7 +36,7 @@ model Swimming_pool
     dp_nominal=10000,
     show_T=true,
     energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
-    T_start=283.15,
+    T_start=T_startAll,
     Q_flow_nominal(displayUnit="kW") = 1000,
     m_flow_nominal=borFieDat.conDat.mBorFie_flow_nominal,
     m_flow(start=borFieDat.conDat.mBorFie_flow_nominal))
@@ -49,7 +50,8 @@ model Swimming_pool
         IDEAS.Fluid.Geothermal.Borefields.Validation.BaseClasses.SandBox_Soil(
         kSoi=3,
         cSoi=1238,
-        dSoi=1940),
+        dSoi=1940,
+        steadyState=true),
     conDat=
         IDEAS.Fluid.Geothermal.Borefields.Validation.BaseClasses.SandBox_Configuration(
         borCon=IDEAS.Fluid.Geothermal.Borefields.Types.BoreholeConfiguration.DoubleUTubeParallel,
@@ -107,7 +109,7 @@ model Swimming_pool
     annotation (Placement(transformation(extent={{40,-28},{60,-8}})));
   IDEAS.Fluid.Sources.Boundary_pT bou(redeclare package Medium =
         IDEAS.Media.Water(lambda_const=0.568),
-    T=283.15,              nPorts=1)
+    T=T_startAll,          nPorts=1)
     annotation (Placement(transformation(extent={{62,4},{82,24}})));
   Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(
     tableOnFile=true,
