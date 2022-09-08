@@ -8,7 +8,7 @@ import time
 
 if __name__ == "__main__":
     # initiate ground, fluid and pipe data
-    ground_data = GroundData(110, 6, 3, 10, 0.12, 20, 20, 2.4 * 10 ** 6)
+    ground_data = GroundData(110, 6, 3, 10, 0.12, 15, 20, 2.4 * 10 ** 6)
     fluid_data = FluidData(0.2, 0.568, 998, 4180, 1e-3)
     pipe_data = PipeData(1, 0.015, 0.02, 0.4, 0.05, 0.075, 2)
 
