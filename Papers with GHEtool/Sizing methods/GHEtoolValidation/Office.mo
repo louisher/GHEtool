@@ -1,10 +1,10 @@
 within GHEtoolValidation;
 model Office
-  parameter Integer nSeg = 5;
-  parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 11.070182;
+  parameter Integer nSeg = 12;
+  parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 10;
   parameter Modelica.Units.SI.Temperature TExt0_start=T_startAll;
-  parameter Modelica.Units.SI.Length z0=4;
-  parameter Real dT_dz(final unit="K/m", min=0) = 0;
+  parameter Modelica.Units.SI.Length z0=0;
+  parameter Real dT_dz(final unit="K/m", min=0) = 0.02;
   parameter Modelica.Units.SI.Height z[nSeg]={borFieDat.conDat.hBor/nSeg*(i -
       0.5) for i in 1:nSeg};
 
@@ -79,7 +79,7 @@ model Office
     annotation (Placement(transformation(extent={{-76,-76},{-56,-56}})));
   IDEAS.Fluid.Geothermal.Borefields.TwoUTubes borFie(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
-    energyDynamics=Modelica.Fluid.Types.Dynamics.DynamicFreeInitial,
+    energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     nSeg=nSeg,
     forceGFunCalc=false,
     borFieDat=borFieDat,

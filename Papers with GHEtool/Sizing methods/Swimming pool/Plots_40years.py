@@ -9,10 +9,21 @@ import plotly.graph_objects as go
 T_ground_avg = 13.10678
 
 # load data
-mod = pd.read_csv("ModelicaResults/TavgFluidL4Tconst.csv", comment='#', sep=",", skiprows=[])
+mod = pd.read_csv("ModelicaResults/TavgFluidL4Tconst40y.csv", comment='#', sep=",", skiprows=[])
 GHE = pd.read_csv("exports/40years.csv", comment='#', sep=",", header=None)
 GHE_Tw = pd.read_csv("exports/Tb_40years.csv", comment='#', sep=",", header=None)
-mod_Tw = pd.read_csv("ModelicaResults/TAveBorL4Tconst.csv", comment='#', sep=",")
+mod_Tw = pd.read_csv("ModelicaResults/TAveBorL4Tconst40y.csv", comment='#', sep=",", skiprows=[])
+Q_flow = pd.read_csv("ModelicaResults/Q_flow40y.csv", comment='#', sep=",", skiprows=[])
+
+
+# calculate Rb* through Tb, Tf and Q_flow
+Tf = np.array(mod["TAvgFluid"])
+Tb = np.array(mod_Tw["borFie.TBorAve"])
+Q_flow = np.array(Q_flow["hea.Q_flow"])
+Rb = 350*300*abs(Tf-Tb)/abs(Q_flow)
+plt.figure()
+plt.plot(Rb)
+plt.show()
 
 # convert GHE data to numpy
 GHE_Tw = np.array(GHE_Tw.iloc[:, 0])

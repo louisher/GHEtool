@@ -33,6 +33,8 @@ if __name__ == "__main__":
 
     borefield.export_temperature_profile("40years.csv", depth=350, subfolder="exports")
 
+    print(borefield._Tg(H=350))
+
     ### size the borefield
     # according to L2
     L2_start = time.time()

@@ -9,10 +9,11 @@ import plotly.graph_objects as go
 T_ground_avg = 13.10678
 
 # load data
-mod = pd.read_csv("ModelicaResults/TavgFluidL4Tconst.csv", comment='#', sep=",", skiprows=[])
+mod = pd.read_csv("ModelicaResults/TavgFluidL4Seg12.csv", comment='#', sep=",", skiprows=[])
 GHE = pd.read_csv("exports/L4_temperature_profile.csv", comment='#', sep=",", header=None)
 GHE_Tw = pd.read_csv("exports/Tb_L4_temperature_profile.csv", comment='#', sep=",", header=None)
-mod_Tw = pd.read_csv("ModelicaResults/TAveBorL4Tconst.csv", comment='#', sep=",")
+mod_Tw = pd.read_csv("ModelicaResults/TAveBorL4Seg12.csv", comment='#', sep=",")
+Q_flow = pd.read_csv("ModelicaResults/Q_flow20y.csv", comment='#', sep=",", skiprows=[])
 
 # convert GHE data to numpy
 GHE_Tw = np.array(GHE_Tw.iloc[:, 0])
@@ -40,6 +41,12 @@ plt.legend()
 # calculate difference
 diff_fluid = GHE[0] - mod["TAvgFluid"] + 273.15
 diff_Twall = GHE_Tw - mod_Tw["borFie.TBorAve"] + 273.15
+
+# calculate relative difference
+diff_fluid_rel = np.divide(diff_fluid, Q_flow["hea.Q_flow"])
+plt.figure()
+plt.plot(diff_fluid_rel)
+
 
 # create figures
 plt.figure()
