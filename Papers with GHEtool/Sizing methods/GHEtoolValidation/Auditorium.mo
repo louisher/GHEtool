@@ -1,10 +1,10 @@
 within GHEtoolValidation;
 model Auditorium
- parameter Integer nSeg = 5;
+ parameter Integer nSeg = 12;
   parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 11.0129;
   parameter Modelica.Units.SI.Temperature TExt0_start=T_startAll;
   parameter Modelica.Units.SI.Length z0=4;
-  parameter Real dT_dz(final unit="K/m", min=0) = 0;
+  parameter Real dT_dz(final unit="K/m", min=0) = 0.02;
   parameter Modelica.Units.SI.Height z[nSeg]={borFieDat.conDat.hBor/nSeg*(i -
       0.5) for i in 1:nSeg};
 
@@ -20,13 +20,13 @@ model Auditorium
     annotation (Placement(transformation(extent={{-22,-10},{-2,-30}})));
   IDEAS.Fluid.Sensors.TemperatureTwoPort TBorFieIn(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568,T_min=273.15-100),
-    T_start=283.15,
+    T_start=T_startAll,
     m_flow_nominal=borFieDat.conDat.mBorFie_flow_nominal,
     tau=0) "Inlet temperature of the borefield"
     annotation (Placement(transformation(extent={{10,-10},{30,-30}})));
   IDEAS.Fluid.Sensors.TemperatureTwoPort TBorFieOut(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568,T_min=273.15-100),
-    T_start=283.15,
+    T_start=T_startAll,
     m_flow_nominal=borFieDat.conDat.mBorFie_flow_nominal,
     tau=0)
     "Outlet temperature of the borefield"
@@ -77,7 +77,8 @@ model Auditorium
     forceGFunCalc=false,
     borFieDat=borFieDat,
     TExt0_start=TExt0_start,
-    TExt_start={TExt0_start for i in 1:nSeg},
+    TExt_start={if z[i] >= z0 then 10 + 273.15 + (z[i] - z0)*dT_dz else
+        TExt0_start for i in 1:nSeg},
     z0=z0,
     dT_dz=dT_dz)
     annotation (Placement(transformation(extent={{40,-30},{60,-10}})));
@@ -96,7 +97,7 @@ model Auditorium
 
   IDEAS.Fluid.Sensors.TemperatureTwoPort TheaIn(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568,T_min=273.15-100),
-    T_start=283.15,
+    T_start=T_startAll,
     m_flow_nominal=borFieDat.conDat.mBorFie_flow_nominal,
     tau=0) "Inlet temperature of the borefield"
     annotation (Placement(transformation(extent={{-82,-30},{-62,-10}})));
@@ -142,6 +143,6 @@ equation
     experiment(
       StopTime=630720000,
       Interval=3600,
-      __Dymola_fixedstepsize=60,
+      __Dymola_fixedstepsize=30,
       __Dymola_Algorithm="Euler"));
 end Auditorium;

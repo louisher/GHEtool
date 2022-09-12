@@ -13,7 +13,7 @@ if __name__ == "__main__":
     pipe_data = PipeData(1, 0.015, 0.02, 0.4, 0.05, 0.075, 2)
 
     # initiate borefield
-    borefield = Borefield(simulation_period=40)
+    borefield = Borefield(simulation_period=20)
 
     # set ground data in borefield
     borefield.set_ground_parameters(ground_data)
@@ -33,7 +33,6 @@ if __name__ == "__main__":
 
     borefield.export_temperature_profile("40years.csv", depth=350, subfolder="exports")
 
-    print(borefield._Tg(H=350))
 
     ### size the borefield
     # according to L2

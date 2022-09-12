@@ -1,7 +1,7 @@
 within GHEtoolValidation;
 model Office
   parameter Integer nSeg = 12;
-  parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 10;
+  parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 11.07018;
   parameter Modelica.Units.SI.Temperature TExt0_start=T_startAll;
   parameter Modelica.Units.SI.Length z0=0;
   parameter Real dT_dz(final unit="K/m", min=0) = 0.02;
@@ -20,13 +20,13 @@ model Office
     annotation (Placement(transformation(extent={{-20,-10},{0,-30}})));
   IDEAS.Fluid.Sensors.TemperatureTwoPort TBorFieIn(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
-    T_start=283.15,
+    T_start=T_startAll,
     m_flow_nominal=borFieDat.conDat.mBorFie_flow_nominal,
     tau=0) "Inlet temperature of the borefield"
     annotation (Placement(transformation(extent={{10,-10},{30,-30}})));
   IDEAS.Fluid.Sensors.TemperatureTwoPort TBorFieOut(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
-    T_start=283.15,
+    T_start=T_startAll,
     m_flow_nominal=borFieDat.conDat.mBorFie_flow_nominal,
     tau=0)
     "Outlet temperature of the borefield"
@@ -76,7 +76,7 @@ model Office
         kTub=0.4,
         eTub=0.005,
         xC=0.05))                                                                                "Borefield data"
-    annotation (Placement(transformation(extent={{-76,-76},{-56,-56}})));
+    annotation (Placement(transformation(extent={{-74,-76},{-54,-56}})));
   IDEAS.Fluid.Geothermal.Borefields.TwoUTubes borFie(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
@@ -84,7 +84,8 @@ model Office
     forceGFunCalc=false,
     borFieDat=borFieDat,
     TExt0_start=TExt0_start,
-    TExt_start={TExt0_start for i in 1:nSeg},
+    TExt_start={if z[i] >= z0 then 10 + 273.15 + (z[i] - z0)*dT_dz else
+        TExt0_start for i in 1:nSeg},
     z0=z0,
     dT_dz=dT_dz)
     annotation (Placement(transformation(extent={{40,-30},{60,-10}})));
@@ -104,7 +105,7 @@ model Office
 
   IDEAS.Fluid.Sensors.TemperatureTwoPort TheaIn(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
-    T_start=283.15,
+    T_start=T_startAll,
     m_flow_nominal=borFieDat.conDat.mBorFie_flow_nominal,
     tau=0) "Inlet temperature of the borefield"
     annotation (Placement(transformation(extent={{-82,-30},{-62,-10}})));
@@ -150,6 +151,6 @@ equation
     experiment(
       StopTime=630720000,
       Interval=3600,
-      __Dymola_fixedstepsize=60,
+      __Dymola_fixedstepsize=30,
       __Dymola_Algorithm="Euler"));
 end Office;

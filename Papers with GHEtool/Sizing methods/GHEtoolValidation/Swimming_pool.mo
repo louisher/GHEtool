@@ -1,7 +1,7 @@
 within GHEtoolValidation;
 model Swimming_pool
   parameter Integer nSeg = 12;
-  parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 10;
+  parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 13.10678;
   parameter Modelica.Units.SI.Temperature TExt0_start=T_startAll;
   parameter Modelica.Units.SI.Length z0=0;
   parameter Real dT_dz(final unit="K/m", min=0) = 0.02;
@@ -20,13 +20,13 @@ model Swimming_pool
     annotation (Placement(transformation(extent={{-20,-8},{0,-28}})));
   IDEAS.Fluid.Sensors.TemperatureTwoPort TBorFieIn(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
-    T_start=283.15,
+    T_start=T_startAll,
     m_flow_nominal=borFieDat.conDat.mBorFie_flow_nominal,
     tau=0) "Inlet temperature of the borefield"
     annotation (Placement(transformation(extent={{10,-8},{30,-28}})));
   IDEAS.Fluid.Sensors.TemperatureTwoPort TBorFieOut(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
-    T_start=283.15,
+    T_start=T_startAll,
     m_flow_nominal=borFieDat.conDat.mBorFie_flow_nominal,
     tau=0)
     "Outlet temperature of the borefield"
@@ -99,11 +99,13 @@ model Swimming_pool
         eTub=0.005,
         xC=0.05))                                                                                "Borefield data"
     annotation (Placement(transformation(extent={{-78,-74},{-58,-54}})));
-  IDEAS.Fluid.Geothermal.Borefields.TwoUTubes borFie(redeclare package Medium =
-        IDEAS.Media.Water(lambda_const=0.568),
+  IDEAS.Fluid.Geothermal.Borefields.TwoUTubes borFie(redeclare package Medium
+      = IDEAS.Media.Water(lambda_const=0.568),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
     nSeg=nSeg,            borFieDat=borFieDat,
     TExt0_start(displayUnit="degC") = TExt0_start,
+    TExt_start={if z[i] >= z0 then 10 + 273.15 + (z[i] - z0)*dT_dz else
+        TExt0_start for i in 1:nSeg},
     z0=z0,
     dT_dz=dT_dz)
     annotation (Placement(transformation(extent={{40,-26},{60,-6}})));
@@ -121,7 +123,7 @@ model Swimming_pool
 
   IDEAS.Fluid.Sensors.TemperatureTwoPort TheaIn(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
-    T_start=283.15,
+    T_start=T_startAll,
     m_flow_nominal=borFieDat.conDat.mBorFie_flow_nominal,
     tau=0) "Inlet temperature of the borefield"
     annotation (Placement(transformation(extent={{-82,-28},{-62,-8}})));
