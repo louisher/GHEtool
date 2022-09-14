@@ -1,7 +1,7 @@
 within GHEtoolValidation;
 model Office_Tconst
  parameter Integer nSeg = 12;
-  parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 11.07018;
+  parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 11.10796;
   parameter Modelica.Units.SI.Temperature TExt0_start=T_startAll;
   parameter Modelica.Units.SI.Length z0=0;
   parameter Real dT_dz(final unit="K/m", min=0) = 0;
@@ -58,7 +58,7 @@ model Office_Tconst
         use_Rb=false,
         mBor_flow_nominal=0.2,
         mBorFie_flow_nominal=20,
-        hBor=107.018,
+        hBor=110.796,
         rBor=0.075,
         dBor=4,
         nBor=100,

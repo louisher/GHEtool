@@ -57,9 +57,9 @@ if __name__ == "__main__":
     print("The sizing according to L3 took", round((L3_stop - L3_start) * 1000, 4), "ms and was", depth_L3, "m.")
     print("The sizing according to L4 took", round((L4_stop - L4_start) * 1000, 4), "ms and was", depth_L4, "m.")
 
-    print(borefield._Tg(H=depth_L4))
-    print(borefield._Tg(H=depth_L3))
-    print(borefield._Tg(H=depth_L2))
+    print("The average ground temperature for L2 is", borefield._Tg(H=depth_L2))
+    print("The average ground temperature for L3 is", borefield._Tg(H=depth_L3))
+    print("The average ground temperature for L4 is", borefield._Tg(H=depth_L4))
 
     ### export results
     borefield.export_temperature_profile("L2_temperature_profile.csv", depth=depth_L2, subfolder="exports")
