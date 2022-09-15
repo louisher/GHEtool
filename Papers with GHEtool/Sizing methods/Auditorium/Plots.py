@@ -7,11 +7,12 @@ import plotly.graph_objects as go
 T_ground_avg = 11.012905782657654
 
 # load data
-mod = pd.read_csv("ModelicaResults/TavgFluidL4Tconst.csv", comment='#', sep=",", skiprows=[])
+mod_Tconst = pd.read_csv("ModelicaResults/TavgFluid_L4_Tconst.csv", comment='#', sep=",", skiprows=[])
+mod = pd.read_csv("ModelicaResults/TavgFluid_L4.csv", comment='#', sep=",", skiprows=[])
 GHE = pd.read_csv("exports/L4_temperature_profile.csv", comment='#', sep=",", header=None)
 GHE_Tw = pd.read_csv("exports/Tb_L4_temperature_profile.csv", comment='#', sep=",", header=None)
-mod_Tw = pd.read_csv("ModelicaResults/TAveBorL4Tconst.csv", comment='#', sep=",")
-
+mod_Tw_Tconst = pd.read_csv("ModelicaResults/TAveBor_L4_Tconst.csv", comment='#', sep=",")
+mod_Tw = pd.read_csv("ModelicaResults/TAveBor_L4.csv", comment='#', sep=",")
 
 # convert GHE data to numpy
 GHE_Tw = np.array(GHE_Tw.iloc[:, 0])
@@ -25,16 +26,22 @@ time = np.arange(0, 175200 * 3600, 3600)
 
 # create figures
 plt.figure()
-plt.plot(mod["Time"], mod["TAvgFluid"]-273.15, color="b", linewidth =0.5, label="modelica")
+plt.plot(mod_Tconst["Time"], mod_Tconst["TAvgFluid"] - 273.15, color="b", linewidth=0.5, label="modelica Tconst")
+plt.plot(mod_Tconst["Time"], mod["TAvgFluid"] - 273.15, color="g", linewidth=0.5, label="modelica Grad")
+
 plt.plot(time, GHE.iloc[:, 0], color="r", linewidth=0.5, label="GHEtool")
 plt.title("Average fluid temperature")
 plt.legend()
 
 plt.figure("T wall")
-plt.plot(mod_Tw["Time"], mod_Tw["borFie.TBorAve"]-273.15, color="b", linewidth=0.5, label="modelica")
+plt.plot(mod_Tw_Tconst["Time"], mod_Tw_Tconst["borFie.TBorAve"] - 273.15, color="b", linewidth=0.5, label="modelica Tconst")
+plt.plot(mod_Tw_Tconst["Time"], mod_Tw["borFie.TBorAve"] - 273.15, color="g", linewidth=0.5, label="modelica Grad")
+
 plt.plot(time_Tw, GHE_Tw, color="r", linewidth=0.5, label="GHEtool")
 plt.title("Average borehole wall temperature")
 plt.legend()
+
+plt.show()
 
 # calculate difference
 diff_fluid = GHE[0] - mod["TAvgFluid"] + 273.15
