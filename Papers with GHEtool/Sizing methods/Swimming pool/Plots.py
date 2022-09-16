@@ -27,6 +27,11 @@ GHE_Tw = np.concatenate((np.array([T_ground_avg]), GHE_Tw))
 time_Tw = np.arange(0, 175201 * 3600, 3600)
 time = np.arange(0, 175200 * 3600, 3600)
 
+
+plt.figure()
+plt.plot(mod_Tconst["TAvgFluid"]-mod["TAvgFluid"])
+plt.show()
+
 # create figures
 plt.figure()
 plt.plot(mod_Tconst["Time"], mod_Tconst["TAvgFluid"] - 273.15, color="b", linewidth=0.5, label="modelica Tconst")

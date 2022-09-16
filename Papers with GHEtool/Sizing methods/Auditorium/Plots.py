@@ -7,12 +7,12 @@ import plotly.graph_objects as go
 T_ground_avg = 11.359375430080162
 
 # load data
-mod_Tconst = pd.read_csv("ModelicaResults/TavgFluid_L2_Tconst.csv", comment='#', sep=",", skiprows=[])
-mod = pd.read_csv("ModelicaResults/TavgFluid_L2.csv", comment='#', sep=",", skiprows=[])
-GHE = pd.read_csv("exports/L2_temperature_profile.csv", comment='#', sep=",", header=None)
-GHE_Tw = pd.read_csv("exports/Tb_L2_temperature_profile.csv", comment='#', sep=",", header=None)
-mod_Tw_Tconst = pd.read_csv("ModelicaResults/TAveBor_L2_Tconst.csv", comment='#', sep=",")
-mod_Tw = pd.read_csv("ModelicaResults/TAveBor_L2.csv", comment='#', sep=",")
+mod_Tconst = pd.read_csv("ModelicaResults/TavgFluid_L4_Tconst.csv", comment='#', sep=",", skiprows=[])
+mod = pd.read_csv("ModelicaResults/TavgFluid_L4.csv", comment='#', sep=",", skiprows=[])
+GHE = pd.read_csv("exports/L4_temperature_profile.csv", comment='#', sep=",", header=None)
+GHE_Tw = pd.read_csv("exports/Tb_L4_temperature_profile.csv", comment='#', sep=",", header=None)
+mod_Tw_Tconst = pd.read_csv("ModelicaResults/TAveBor_L4_Tconst.csv", comment='#', sep=",")
+mod_Tw = pd.read_csv("ModelicaResults/TAveBor_L4.csv", comment='#', sep=",")
 
 # convert GHE data to numpy
 GHE_Tw = np.array(GHE_Tw.iloc[:, 0])
@@ -55,24 +55,6 @@ plt.title("Difference average fluid temperature")
 plt.figure("Twall dif")
 plt.plot(time_Tw, diff_Twall, color="b", linewidth=0.5, label="difference")
 plt.title("Difference average borehole wall temperature")
-
-fig = make_subplots(rows=3, cols=1,
-                    shared_xaxes=True,
-                    vertical_spacing=0.02)
-
-fig.add_trace(go.Scatter(x=mod["Time"], y=diff_fluid),
-              row=3, col=1)
-
-fig.add_trace(go.Scatter(x=mod["Time"], y=mod["TAvgFluid"]-273.15),
-              row=2, col=1)
-
-fig.add_trace(go.Scatter(x=time, y=GHE.iloc[:, 0]),
-              row=1, col=1)
-
-fig.update_layout(height=1000, width=2000,
-                  title_text="Stacked Subplots with Shared X-Axes")
-fig.show()
-
 plt.show()
 
 
