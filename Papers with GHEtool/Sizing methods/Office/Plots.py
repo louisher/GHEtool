@@ -12,8 +12,8 @@ mod_Tconst = pd.read_csv("ModelicaResults/TavgFluid_L4_Tconst.csv", comment='#',
 mod = pd.read_csv("ModelicaResults/TavgFluid_L4.csv", comment='#', sep=",", skiprows=[])
 GHE = pd.read_csv("exports/L4_temperature_profile.csv", comment='#', sep=",", header=None)
 GHE_Tw = pd.read_csv("exports/Tb_L4_temperature_profile.csv", comment='#', sep=",", header=None)
-mod_Tw_Tconst = pd.read_csv("ModelicaResults/TAveBor_L3_Tconst.csv", comment='#', sep=",")
-mod_Tw = pd.read_csv("ModelicaResults/TAveBor_L3.csv", comment='#', sep=",")
+mod_Tw_Tconst = pd.read_csv("ModelicaResults/TAveBor_L4_Tconst.csv", comment='#', sep=",")
+mod_Tw = pd.read_csv("ModelicaResults/TAveBor_L4.csv", comment='#', sep=",")
 
 # convert GHE data to numpy
 GHE_Tw = np.array(GHE_Tw.iloc[:, 0])
