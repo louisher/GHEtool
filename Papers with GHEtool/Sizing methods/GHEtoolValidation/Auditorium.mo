@@ -1,15 +1,15 @@
 within GHEtoolValidation;
 model Auditorium
  parameter Integer nSeg = 12;
-  parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 11.0129;
+  parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 11.35938;
   parameter Modelica.Units.SI.Temperature TExt0_start=T_startAll;
-  parameter Modelica.Units.SI.Length z0=4;
+  parameter Modelica.Units.SI.Length z0=0;
   parameter Real dT_dz(final unit="K/m", min=0) = 0.02;
   parameter Modelica.Units.SI.Height z[nSeg]={borFieDat.conDat.hBor/nSeg*(i -
       0.5) for i in 1:nSeg};
 
   IDEAS.Fluid.Movers.FlowControlled_m_flow pum(
-    redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568,T_min=273.15-100),
+    redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
     T_start=T_startAll,
     addPowerToMedium=false,
     use_inputFilter=false,
@@ -17,22 +17,22 @@ model Auditorium
     m_flow_nominal=borFieDat.conDat.mBorFie_flow_nominal,
     nominalValuesDefineDefaultPressureCurve=true,
     inputType=IDEAS.Fluid.Types.InputType.Constant)
-    annotation (Placement(transformation(extent={{-22,-10},{-2,-30}})));
+    annotation (Placement(transformation(extent={{-20,-10},{0,-30}})));
   IDEAS.Fluid.Sensors.TemperatureTwoPort TBorFieIn(
-    redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568,T_min=273.15-100),
+    redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
     T_start=T_startAll,
     m_flow_nominal=borFieDat.conDat.mBorFie_flow_nominal,
     tau=0) "Inlet temperature of the borefield"
     annotation (Placement(transformation(extent={{10,-10},{30,-30}})));
   IDEAS.Fluid.Sensors.TemperatureTwoPort TBorFieOut(
-    redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568,T_min=273.15-100),
+    redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
     T_start=T_startAll,
     m_flow_nominal=borFieDat.conDat.mBorFie_flow_nominal,
     tau=0)
     "Outlet temperature of the borefield"
     annotation (Placement(transformation(extent={{70,-10},{90,-30}})));
   IDEAS.Fluid.HeatExchangers.HeaterCooler_u hea(
-    redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568,T_min=273.15-100),
+    redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
     dp_nominal=10000,
     show_T=true,
     energyDynamics=Modelica.Fluid.Types.Dynamics.SteadyState,
@@ -45,7 +45,7 @@ model Auditorium
   parameter IDEAS.Fluid.Geothermal.Borefields.Validation.BaseClasses.SandBox_Borefield borFieDat(
     filDat=
         IDEAS.Fluid.Geothermal.Borefields.Validation.BaseClasses.SandBox_Filling(
-        kFil=1, steadyState=false),
+         kFil=1, steadyState=false),
     soiDat=
         IDEAS.Fluid.Geothermal.Borefields.Validation.BaseClasses.SandBox_Soil(
         kSoi=3,
@@ -58,21 +58,20 @@ model Auditorium
         use_Rb=false,
         mBor_flow_nominal=0.2,
         mBorFie_flow_nominal=4,
-        hBor=101.2906,
+        hBor=135.9375,
         rBor=0.075,
         dBor=4,
         nBor=20,
-        cooBor=[0,0; 6,0; 12,0; 18,0; 0,6; 6,6; 12,6; 18,6; 0,12; 6,12; 12,12; 18,
-          12; 0,18; 6,18; 12,18; 18,18; 0,24; 6,24; 12,24; 18,24],
+        cooBor=[0,0; 6,0; 12,0; 18,0; 0,6; 6,6; 12,6; 18,6; 0,12; 6,12; 12,12;
+          18,12; 0,18; 6,18; 12,18; 18,18; 0,24; 6,24; 12,24; 18,24],
         rTub=0.02,
         kTub=0.4,
         eTub=0.005,
         xC=0.05))                                                                                "Borefield data"
-    annotation (Placement(transformation(extent={{-76,-76},{-56,-56}})));
+    annotation (Placement(transformation(extent={{-74,-76},{-54,-56}})));
   IDEAS.Fluid.Geothermal.Borefields.TwoUTubes borFie(
-    redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568,T_min=273.15-100),
+    redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
-    tLoaAgg=300,
     nSeg=nSeg,
     forceGFunCalc=false,
     borFieDat=borFieDat,
@@ -83,7 +82,7 @@ model Auditorium
     dT_dz=dT_dz)
     annotation (Placement(transformation(extent={{40,-30},{60,-10}})));
   IDEAS.Fluid.Sources.Boundary_pT bou(
-    redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568,T_min=273.15-100),
+    redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
     T=T_startAll,
     nPorts=1)
     annotation (Placement(transformation(extent={{62,2},{82,22}})));
@@ -96,7 +95,7 @@ model Auditorium
     annotation (Placement(transformation(extent={{-84,2},{-64,22}})));
 
   IDEAS.Fluid.Sensors.TemperatureTwoPort TheaIn(
-    redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568,T_min=273.15-100),
+    redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
     T_start=T_startAll,
     m_flow_nominal=borFieDat.conDat.mBorFie_flow_nominal,
     tau=0) "Inlet temperature of the borefield"
@@ -108,10 +107,10 @@ model Auditorium
   Modelica.Blocks.Interfaces.RealOutput TAvgFluid "Output signal connector"
     annotation (Placement(transformation(extent={{94,-86},{114,-66}})));
 equation
-  connect(pum.port_b,TBorFieIn. port_a) annotation (Line(points={{-2,-20},{10,
+  connect(pum.port_b,TBorFieIn. port_a) annotation (Line(points={{0,-20},{10,
           -20}},                         color={0,127,255}));
   connect(hea.port_b,pum. port_a)
-    annotation (Line(points={{-30,-20},{-22,-20}},     color={0,127,255}));
+    annotation (Line(points={{-30,-20},{-20,-20}},     color={0,127,255}));
   connect(TBorFieIn.port_b,borFie. port_a)
     annotation (Line(points={{30,-20},{40,-20}}, color={0,127,255}));
   connect(TBorFieOut.port_a,borFie. port_b)
@@ -136,6 +135,15 @@ equation
   connect(TBorFieOut.T, add.u1) annotation (Line(points={{80,-31},{80,-58},{30,
           -58},{30,-70}}, color={0,0,127}));
   annotation (
+    Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{120,
+            100}})),
+    Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{
+            120,100}})),
+    experiment(
+      StopTime=630720000,
+      Interval=3600,
+      __Dymola_fixedstepsize=30,
+      __Dymola_Algorithm="Euler"),
     Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{120,
             100}})),
     Diagram(coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{
