@@ -4,15 +4,15 @@ import matplotlib.pyplot as plt
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
-T_ground_avg = 11.362081571028261
+T_ground_avg = 11.359375430080162
 
 # load data
-mod_Tconst = pd.read_csv("ModelicaResults/TavgFluid_L3_Tconst.csv", comment='#', sep=",", skiprows=[])
-mod = pd.read_csv("ModelicaResults/TavgFluid_L3.csv", comment='#', sep=",", skiprows=[])
-GHE = pd.read_csv("exports/L3_temperature_profile.csv", comment='#', sep=",", header=None)
-GHE_Tw = pd.read_csv("exports/Tb_L3_temperature_profile.csv", comment='#', sep=",", header=None)
-mod_Tw_Tconst = pd.read_csv("ModelicaResults/TAveBor_L3_Tconst.csv", comment='#', sep=",")
-mod_Tw = pd.read_csv("ModelicaResults/TAveBor_L3.csv", comment='#', sep=",")
+mod_Tconst = pd.read_csv("ModelicaResults/TavgFluid_L2_Tconst.csv", comment='#', sep=",", skiprows=[])
+mod = pd.read_csv("ModelicaResults/TavgFluid_L2.csv", comment='#', sep=",", skiprows=[])
+GHE = pd.read_csv("exports/L2_temperature_profile.csv", comment='#', sep=",", header=None)
+GHE_Tw = pd.read_csv("exports/Tb_L2_temperature_profile.csv", comment='#', sep=",", header=None)
+mod_Tw_Tconst = pd.read_csv("ModelicaResults/TAveBor_L2_Tconst.csv", comment='#', sep=",")
+mod_Tw = pd.read_csv("ModelicaResults/TAveBor_L2.csv", comment='#', sep=",")
 
 # convert GHE data to numpy
 GHE_Tw = np.array(GHE_Tw.iloc[:, 0])

@@ -1,7 +1,7 @@
 within GHEtoolValidation;
 model Auditorium_Tconst
  parameter Integer nSeg = 12;
-  parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 11.0129;
+  parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 11.01291;
   parameter Modelica.Units.SI.Temperature TExt0_start=T_startAll;
   parameter Modelica.Units.SI.Length z0=4;
   parameter Real dT_dz(final unit="K/m", min=0) = 0;
