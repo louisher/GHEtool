@@ -1,7 +1,7 @@
 within GHEtoolValidation;
 model Office
   parameter Integer nSeg = 12;
-  parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 11.10796;
+  parameter Modelica.Units.SI.Temperature T_startAll = 273.15 + 12;
   parameter Modelica.Units.SI.Temperature TExt0_start=T_startAll;
   parameter Modelica.Units.SI.Length z0=0;
   parameter Real dT_dz(final unit="K/m", min=0) = 0.02;
@@ -58,7 +58,7 @@ model Office
         use_Rb=false,
         mBor_flow_nominal=0.2,
         mBorFie_flow_nominal=20,
-        hBor=110.796,
+        hBor=200,
         rBor=0.075,
         dBor=4,
         nBor=100,
@@ -76,7 +76,7 @@ model Office
         kTub=0.4,
         eTub=0.005,
         xC=0.05))                                                                                "Borefield data"
-    annotation (Placement(transformation(extent={{-74,-76},{-54,-56}})));
+    annotation (Placement(transformation(extent={{-74,-74},{-54,-54}})));
   IDEAS.Fluid.Geothermal.Borefields.TwoUTubes borFie(
     redeclare package Medium = IDEAS.Media.Water(lambda_const=0.568),
     energyDynamics=Modelica.Fluid.Types.Dynamics.FixedInitial,
