@@ -14,6 +14,31 @@ GHE_Tw = pd.read_csv("exports/Tb_L4_temperature_profile.csv", comment='#', sep="
 mod_Tw_Tconst = pd.read_csv("ModelicaResults/TAveBor_L4_Tconst.csv", comment='#', sep=",")
 mod_Tw = pd.read_csv("ModelicaResults/TAveBor_L4.csv", comment='#', sep=",")
 
+sizing = ["L2", "L3", "L4"]
+modelica = [pd.read_csv("ModelicaResults/TavgFluid_L2_Tconst.csv", comment='#', sep=",", skiprows=[])["TAvgFluid"],
+            pd.read_csv("ModelicaResults/TavgFluid_L3_Tconst.csv", comment='#', sep=",", skiprows=[])["TAvgFluid"],
+            pd.read_csv("ModelicaResults/TavgFluid_L4_Tconst.csv", comment='#', sep=",", skiprows=[])["TAvgFluid"]]
+GHEtool = [pd.read_csv("exports/L2_temperature_profile.csv", comment='#', sep=",", header=None)[0],
+           pd.read_csv("exports/L3_temperature_profile.csv", comment='#', sep=",", header=None)[0],
+           pd.read_csv("exports/L4_temperature_profile.csv", comment='#', sep=",", header=None)[0]]
+
+diff = [GHEtool[i] - modelica[i] + 273.15 for i in range(3)]
+
+diff = [[j for j in i[:-1]] for i in diff]
+
+boxplotdata = dict([])
+import matplotlib.cbook as cbook
+for i in range(3):
+    boxplotdata[sizing[i]] = diff[i]
+
+stats = cbook.boxplot_stats(diff, labels=sizing, bootstrap=100)
+
+# plot boxplot
+fig, ax = plt.subplots()
+ax.bxp(stats)
+ax.set_ylabel("Temperature difference [deg C]")
+plt.show()
+
 # convert GHE data to numpy
 GHE_Tw = np.array(GHE_Tw.iloc[:, 0])
 
