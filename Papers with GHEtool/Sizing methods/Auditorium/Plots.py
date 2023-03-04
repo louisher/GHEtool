@@ -22,22 +22,16 @@ GHEtool = [pd.read_csv("exports/L2_temperature_profile.csv", comment='#', sep=",
            pd.read_csv("exports/L3_temperature_profile.csv", comment='#', sep=",", header=None)[0],
            pd.read_csv("exports/L4_temperature_profile.csv", comment='#', sep=",", header=None)[0]]
 
-diff = [GHEtool[i] - modelica[i] + 273.15 for i in range(3)]
+max_temps = [np.max(i) - 273.15 for i in modelica]
+min_temps = [np.min(i) - 273.15for i in modelica]
 
-diff = [[j for j in i[:-1]] for i in diff]
+rel_diff_max = [(17-i)/17*100 for i in max_temps]
+rel_diff_min = [(i-3)/3*100 for i in min_temps]
 
-boxplotdata = dict([])
-import matplotlib.cbook as cbook
-for i in range(3):
-    boxplotdata[sizing[i]] = diff[i]
-
-stats = cbook.boxplot_stats(diff, labels=sizing, bootstrap=100)
-
-# plot boxplot
-fig, ax = plt.subplots()
-ax.bxp(stats)
-ax.set_ylabel("Temperature difference [deg C]")
-plt.show()
+print(max_temps)
+print(min_temps)
+print(rel_diff_max)
+print(rel_diff_min)
 
 # convert GHE data to numpy
 GHE_Tw = np.array(GHE_Tw.iloc[:, 0])
