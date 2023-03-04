@@ -43,6 +43,22 @@ GHE_Tw = np.concatenate((np.array([T_ground_avg]), GHE_Tw))
 time_Tw = np.arange(0, 175201 * 3600, 3600)
 time = np.arange(0, 175200 * 3600, 3600)
 
+time_hours = np.arange(0, 8760*20+1, 1)
+
+# create figures
+plt.figure()
+plt.plot(time_hours, mod_Tconst["TAvgFluid"] - 273.15, color="b", linewidth=0.5, label="modelica")
+
+plt.plot(time_hours[:-1], GHE.iloc[:, 0], color="r", linewidth=0.5, label="GHEtool - L4")
+plt.title("Close up average fluid temperature auditorium")
+plt.ylabel("Temperature [deg C]")
+plt.xlabel("Time [hours]")
+plt.xlim([4550, 4800])
+plt.ylim([10.6, 12.6])
+plt.tight_layout()
+plt.legend()
+plt.show()
+
 # create figures
 plt.figure()
 plt.plot(mod_Tconst["Time"], mod_Tconst["TAvgFluid"] - 273.15, color="b", linewidth=0.5, label="modelica Tconst")
